@@ -113,6 +113,8 @@ async def process_start_command(message: types.Message):
             await message.reply(f'🗿 Авторизован:\nКуратор И504Б', reply_markup=kb.menu_kur)
         elif (checkuser.check_kurva(message.from_user.id) == 2):
             await message.reply(f'🗿 Авторизован:\nКуратор И505Б', reply_markup=kb.menu_kur)
+        elif (checkuser.check_kurva(message.from_user.id) == 3):
+            await message.reply(f'🗿 Авторизован:\nКуратор И507Б', reply_markup=kb.menu_kur)
         else:
             await message.reply(f'Группа не доступна')
 #----------------------------------------
@@ -620,7 +622,9 @@ async def callback_kurator1(call: types.CallbackQuery):
             elif (checkuser.check_kurva(call.from_user.id) == 1):
                 await call.message.edit_text(f'🗿 Куратор И504Б', reply_markup=kb.menu_kur)
             elif (checkuser.check_kurva(call.from_user.id) == 2):
-                await call.message.edit_text(f'🗿 Куратор И505Б', reply_markup=kb.menu_kur) 
+                await call.message.edit_text(f'🗿 Куратор И505Б', reply_markup=kb.menu_kur)
+            elif (checkuser.check_kurva(call.from_user.id) == 3):
+                await call.message.edit_text(f'🗿 Куратор И507Б', reply_markup=kb.menu_kur) 
             else:
                 await call.message.edit_text(f'⚠️ Ошибка доступа')
         if code == 9:

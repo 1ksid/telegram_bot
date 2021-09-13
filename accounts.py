@@ -72,6 +72,8 @@ class ALLusers:
                 my_group = '🌚 Выбрана группа И504Б'
             elif group == 2:
                 my_group = '🌚 Выбрана группа И505Б'
+            elif group == 3:
+                my_group = '🌚 Выбрана группа И507Б'
             else:
                 return (f'⚠️ Группа не найдена. Возможно она была удалена.')
 
@@ -97,6 +99,8 @@ class ALLusers:
                 group2 = 'И504Б'
             elif (user_group2[0] == 2):
                 group2 = 'И505Б'
+            elif (user_group2[0] == 3):
+                group2 = 'И507Б'
             else:
                 group2 = '?'
             return (group2)
@@ -141,6 +145,8 @@ class ALLusers:
                 group = 'И504Б'
             elif (your_group[0] == 2):
                 group = 'И505Б'
+            elif (your_group[0] == 3):
+                group = 'И507Б'
             else:
                 group = '⚠️ Группа не найдена. Возможно она была удалена.'
 
@@ -345,7 +351,7 @@ class ALLusers:
             result6 = self.cursor.execute('SELECT `6_ne` FROM `groups` WHERE `group_id` = ?', (group_id,)).fetchall()
             the_result6 = result6[0]
 
-            return (f"Все доступные задания:\n\n—————————\nПонедельник:\n\n{the_result1[0]}\n\n"
+            return (f"🔵 нечетная неделя\n\n—————————\nПонедельник:\n\n{the_result1[0]}\n\n"
                 f"—————————\nВторник:\n\n{the_result2[0]}\n\n"
                 f"—————————\nСреда:\n\n{the_result3[0]}\n\n"
                 f"—————————\nЧетверг:\n\n{the_result4[0]}\n\n"
@@ -369,7 +375,7 @@ class ALLusers:
             result6 = self.cursor.execute('SELECT `6_ch` FROM `groups` WHERE `group_id` = ?', (group_id,)).fetchall()
             the_result6 = result6[0]
 
-            return (f"Все доступные задания:\n\n—————————\nПонедельник:\n\n{the_result1[0]}\n\n"
+            return (f"🟡 четная неделя\n\n—————————\nПонедельник:\n\n{the_result1[0]}\n\n"
                 f"—————————\nВторник:\n\n{the_result2[0]}\n\n"
                 f"—————————\nСреда:\n\n{the_result3[0]}\n\n"
                 f"—————————\nЧетверг:\n\n{the_result4[0]}\n\n"

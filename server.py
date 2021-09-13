@@ -32,7 +32,7 @@ class Form(StatesGroup):
     met = State()
     pausemet = State()
 #----------------------------------------
-moderlist = [telegram_id]
+moderlist = [437185033]
 #----------------------------------------
 
 
@@ -72,15 +72,19 @@ async def process_start_command(message: types.Message):
         checkuser.update_online(message.from_user.id, True)
         await message.answer(f'👯‍♀️ Приветствую!\n\n👤 Группа не выбрана - /setgroup\n\n💌 Уведомления включены (уведомления заработают после выбора группы).\nДля отключения - /недоступно\n\n💬 Обратная связь - /feedback')
         if (checkuser.check_week() == 0):
-            await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_0)
+            await message.answer(MESSAGES['start'], reply_markup=kb.menu_0)
+           # await bot.send_photo(message.from_user.id, 'тут можно вставить токен фото, получить можно в боте server_redaktor просто отправить фото и в консоли даст ответ', MESSAGES['start'], reply_markup=kb.menu_0)
         else:
-            await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_1)
+            await message.answer(MESSAGES['start'], reply_markup=kb.menu_1)
+           # await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_1)
     else:
 # если юзер в базе
         if (checkuser.check_week() == 0):
-            await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_0)
+            await message.answer(MESSAGES['start'], reply_markup=kb.menu_0)
+           # await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_0)
         else:
-            await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_1)
+            await message.answer(MESSAGES['start'], reply_markup=kb.menu_1)
+           # await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_1)
 
 #----------------------------------------
 
@@ -110,9 +114,11 @@ async def do_main_menu(message: types.Message):
             await message.answer(MESSAGES['feedback'])
         elif txt == '↪️ Назад':
             if (checkuser.check_week() == 0):
-                await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_0)
+                await message.answer(MESSAGES['start'], reply_markup=kb.menu_0)
+            #    await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_0)
             else:
-                await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_1)
+                await message.answer(MESSAGES['start'], reply_markup=kb.menu_1)
+              #  await bot.send_photo(message.from_user.id, 'AgACAgIAAxkBAAMCYTjNZ9GNXdGVcOfPOy7NKx4MhYIAAj61MRskHslJN33M-HgHkhsBAAMCAANzAAMgBA', MESSAGES['start'], reply_markup=kb.menu_1)
         elif txt == '🔵 нечетная неделя':
             if (checkuser.check_week() == 0):
                 await message.answer(f'Сейчас: 🔵 нечетная неделя', reply_markup=kb.week_ne)
@@ -139,11 +145,51 @@ async def do_main_menu(message: types.Message):
                 await message.reply(f'Обновлено: 🟡 четная неделя', reply_markup=kb.menu_1)
         elif txt == '📅 Расписание':
             if (checkuser.check_week() == 0):
-                await message.answer(f'Актуально на 2021 год', reply_markup=kb.week_ne)
-                await message.answer(f'🔵 нечетная неделя\n\nВыбери день:', reply_markup=kb.day_ne)
+                rr = datetime.weekday(datetime.now())
+                if (checkuser.check_group(message.from_user.id) == 0):
+                    answer_message = f'⚠️ Группа не выбрана.\nИспользуй - /setgroup'
+                elif (rr == 0):
+                    answer_message = checkuser.load_day_ne_1(checkuser.check_group(message.from_user.id))
+                elif (rr == 1):
+                    answer_message = checkuser.load_day_ne_2(checkuser.check_group(message.from_user.id))
+                elif (rr == 2):
+                    answer_message = checkuser.load_day_ne_3(checkuser.check_group(message.from_user.id))
+                elif (rr == 3):
+                    answer_message = checkuser.load_day_ne_4(checkuser.check_group(message.from_user.id))
+                elif (rr == 4):
+                    answer_message = checkuser.load_day_ne_5(checkuser.check_group(message.from_user.id))
+                elif (rr == 5):
+                    answer_message = checkuser.load_day_ne_6(checkuser.check_group(message.from_user.id))
+                elif (rr == 6):
+                    answer_message = f'Отдыхай, сегодня воскресенье)'
+                else:
+                    answer_message = f'error'                  
+
+                await message.answer(f'Сейчас: 🔵 нечетная неделя', reply_markup=kb.week_ne)
+                await message.answer(answer_message, reply_markup=kb.menu_day_ne_back)  
             else:
-                await message.answer(f'Актуально на 2021 год', reply_markup=kb.week_ch)
-                await message.answer(f'🟡 четная неделя\n\nВыбери день:', reply_markup=kb.day_ch)
+                rr = datetime.weekday(datetime.now())
+                if (checkuser.check_group(message.from_user.id) == 0):
+                    answer_message = f'⚠️ Группа не выбрана.\nИспользуй - /setgroup'
+                elif (rr == 0):
+                    answer_message = checkuser.load_day_ch_1(checkuser.check_group(message.from_user.id))
+                elif (rr == 1):
+                    answer_message = checkuser.load_day_ch_2(checkuser.check_group(message.from_user.id))
+                elif (rr == 2):
+                    answer_message = checkuser.load_day_ch_3(checkuser.check_group(message.from_user.id))
+                elif (rr == 3):
+                    answer_message = checkuser.load_day_ch_4(checkuser.check_group(message.from_user.id))
+                elif (rr == 4):
+                    answer_message = checkuser.load_day_ch_5(checkuser.check_group(message.from_user.id))
+                elif (rr == 5):
+                    answer_message = checkuser.load_day_ch_6(checkuser.check_group(message.from_user.id))
+                elif (rr == 6):
+                    answer_message = f'Отдыхай, сегодня воскресенье)'
+                else:
+                    answer_message = f'error'                  
+
+                await message.answer(f'Сейчас: 🟡 четная неделя', reply_markup=kb.week_ch)
+                await message.answer(answer_message, reply_markup=kb.menu_day_ch_back)  
         elif txt == '⚙️ Настройки':
             if (checkuser.check_week() == 0):
                 await message.answer(checkuser.settings_load(message.from_user.id), reply_markup=kb.menu_0)
@@ -202,6 +248,9 @@ async def do_main_menu(message: types.Message):
             await message.answer(checkuser.settings_load(message.from_user.id))
         elif txt == '/setgroup_i505b':
             await message.reply(checkuser.setgroup(message.from_user.id, 2))
+            await message.answer(checkuser.settings_load(message.from_user.id))
+        elif txt == '/setgroup_i507b':
+            await message.reply(checkuser.setgroup(message.from_user.id, 3))
             await message.answer(checkuser.settings_load(message.from_user.id))
         else:
             await message.reply(f'Команда не найдена.\nИспользуйте - /start')
